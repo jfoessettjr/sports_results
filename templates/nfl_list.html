@@ -13,7 +13,9 @@
     <select name="season" class="form-select">
       <option value="">All</option>
       {% for s in seasons %}
-        <option value="{{ s }}" {% if selected_season == s %}selected{% endif %}>{{ s }}</option>
+        <option value="{{ s }}" {% if selected_season == s %}selected{% endif %}>
+          {{ s }}
+        </option>
       {% endfor %}
     </select>
   </div>
@@ -42,6 +44,9 @@
       <th>H/A</th>
       <th>Score</th>
       <th>Result</th>
+      {% if session.get('is_admin') %}
+      <th>Actions</th>
+      {% endif %}
     </tr>
   </thead>
   <tbody>
@@ -54,6 +59,17 @@
       <td>{{ g.home_away }}</td>
       <td>Steelers {{ g.steelers_score }} - {{ g.opponent_score }}</td>
       <td>{{ g.result }}</td>
+      {% if session.get('is_admin') %}
+      <td>
+        <a href="{{ url_for('nfl_edit', game_id=g.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <form method="post"
+              action="{{ url_for('nfl_delete', game_id=g.id) }}"
+              style="display:inline;"
+              onsubmit="return confirm('Delete this game?');">
+          <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+        </form>
+      </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>

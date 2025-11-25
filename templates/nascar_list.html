@@ -40,6 +40,9 @@
       <th>Start</th>
       <th>Finish</th>
       <th>Laps Led</th>
+      {% if session.get('is_admin') %}
+      <th>Actions</th>
+      {% endif %}
     </tr>
   </thead>
   <tbody>
@@ -53,6 +56,17 @@
       <td>{{ r.start_position or '' }}</td>
       <td>{{ r.finish_position or '' }}</td>
       <td>{{ r.laps_led or '' }}</td>
+      {% if session.get('is_admin') %}
+      <td>
+        <a href="{{ url_for('nascar_edit', race_id=r.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <form method="post"
+              action="{{ url_for('nascar_delete', race_id=r.id) }}"
+              style="display:inline;"
+              onsubmit="return confirm('Delete this race?');">
+          <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+        </form>
+      </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>

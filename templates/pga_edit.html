@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit PGA Result</h2>
+<form method="post" class="row g-3">
+  <div class="col-md-2">
+    <label class="form-label">Year</label>
+    <input type="number" name="year" class="form-control" value="{{ result.year }}" required>
+  </div>
+  <div class="col-md-5">
+    <label class="form-label">Tournament Name</label>
+    <input type="text" name="tournament_name" class="form-control"
+           value="{{ result.tournament_name }}" required>
+  </div>
+  <div class="col-md-5">
+    <label class="form-label">Course</label>
+    <input type="text" name="course" class="form-control" value="{{ result.course or '' }}">
+  </div>
+
+  <div class="col-md-3">
+    <label class="form-label">Finish Position</label>
+    <input type="number" name="finish_position" class="form-control"
+           value="{{ result.finish_position or '' }}">
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Score to Par</label>
+    <input type="number" name="score_to_par" class="form-control"
+           value="{{ result.score_to_par or '' }}">
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Notes</label>
+    <textarea name="notes" class="form-control" rows="3">{{ result.notes or '' }}</textarea>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="{{ url_for('pga_list') }}" class="btn btn-secondary ms-2">Cancel</a>
+  </div>
+</form>
+{% endblock %}

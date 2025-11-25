@@ -35,6 +35,9 @@
       <th>Course</th>
       <th>Finish</th>
       <th>Score to Par</th>
+      {% if session.get('is_admin') %}
+      <th>Actions</th>
+      {% endif %}
     </tr>
   </thead>
   <tbody>
@@ -49,6 +52,17 @@
           {% if r.score_to_par > 0 %}+{% endif %}{{ r.score_to_par }}
         {% endif %}
       </td>
+      {% if session.get('is_admin') %}
+      <td>
+        <a href="{{ url_for('pga_edit', result_id=r.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <form method="post"
+              action="{{ url_for('pga_delete', result_id=r.id) }}"
+              style="display:inline;"
+              onsubmit="return confirm('Delete this result?');">
+          <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+        </form>
+      </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>

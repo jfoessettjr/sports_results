@@ -135,6 +135,38 @@ def create_app():
             return redirect(url_for("nascar_list"))
 
         return render_template("nascar_add.html")
+    
+        @app.route("/nascar/<int:race_id>/edit", methods=["GET", "POST"])
+    @require_admin
+    def nascar_edit(race_id):
+        race = NascarRace.query.get_or_404(race_id)
+
+        if request.method == "POST":
+            race.race_date = datetime.strptime(request.form["race_date"], "%Y-%m-%d").date()
+            race.track = request.form["track"]
+            race.series = request.form.get("series") or None
+            race.race_name = request.form.get("race_name") or None
+            race.winner = request.form["winner"]
+            race.start_position = int(request.form["start_position"]) if request.form.get("start_position") else None
+            race.finish_position = int(request.form["finish_position"]) if request.form.get("finish_position") else None
+            race.laps_led = int(request.form["laps_led"]) if request.form.get("laps_led") else None
+            race.notes = request.form.get("notes") or None
+
+            db.session.commit()
+            flash("NASCAR race updated.", "success")
+            return redirect(url_for("nascar_list"))
+
+        return render_template("nascar_edit.html", race=race)
+
+    @app.route("/nascar/<int:race_id>/delete", methods=["POST"])
+    @require_admin
+    def nascar_delete(race_id):
+        race = NascarRace.query.get_or_404(race_id)
+        db.session.delete(race)
+        db.session.commit()
+        flash("NASCAR race deleted.", "info")
+        return redirect(url_for("nascar_list"))
+
 
     # ---------- NFL (Steelers only) ----------
 
@@ -203,6 +235,48 @@ def create_app():
 
         return render_template("nfl_add.html")
 
+    @app.route("/nfl/<int:game_id>/edit", methods=["GET", "POST"])
+    @require_admin
+    def nfl_edit(game_id):
+        game = NflGame.query.get_or_404(game_id)
+
+        if request.method == "POST":
+            game.game_date = datetime.strptime(request.form["game_date"], "%Y-%m-%d").date()
+            game.season = int(request.form["season"])
+            game.week = int(request.form["week"]) if request.form.get("week") else None
+            game.opponent = request.form["opponent"]
+            game.home_away = request.form["home_away"]
+
+            steelers_score = int(request.form["steelers_score"])
+            opponent_score = int(request.form["opponent_score"])
+            game.steelers_score = steelers_score
+            game.opponent_score = opponent_score
+
+            if steelers_score > opponent_score:
+                game.result = "W"
+            elif steelers_score < opponent_score:
+                game.result = "L"
+            else:
+                game.result = "T"
+
+            game.notes = request.form.get("notes") or None
+
+            db.session.commit()
+            flash("Steelers game updated.", "success")
+            return redirect(url_for("nfl_list"))
+
+        return render_template("nfl_edit.html", game=game)
+
+    @app.route("/nfl/<int:game_id>/delete", methods=["POST"])
+    @require_admin
+    def nfl_delete(game_id):
+        game = NflGame.query.get_or_404(game_id)
+        db.session.delete(game)
+        db.session.commit()
+        flash("Steelers game deleted.", "info")
+        return redirect(url_for("nfl_list"))
+
+
     # ---------- PGA ----------
 
     @app.route("/pga")
@@ -261,6 +335,35 @@ def create_app():
             return redirect(url_for("pga_list"))
 
         return render_template("pga_add.html")
+
+    @app.route("/pga/<int:result_id>/edit", methods=["GET", "POST"])
+    @require_admin
+    def pga_edit(result_id):
+        result = PgaResult.query.get_or_404(result_id)
+
+        if request.method == "POST":
+            result.year = int(request.form["year"])
+            result.tournament_name = request.form["tournament_name"]
+            result.course = request.form.get("course") or None
+            result.finish_position = int(request.form["finish_position"]) if request.form.get("finish_position") else None
+            result.score_to_par = int(request.form["score_to_par"]) if request.form.get("score_to_par") else None
+            result.notes = request.form.get("notes") or None
+
+            db.session.commit()
+            flash("PGA result updated.", "success")
+            return redirect(url_for("pga_list"))
+
+        return render_template("pga_edit.html", result=result)
+
+    @app.route("/pga/<int:result_id>/delete", methods=["POST"])
+    @require_admin
+    def pga_delete(result_id):
+        result = PgaResult.query.get_or_404(result_id)
+        db.session.delete(result)
+        db.session.commit()
+        flash("PGA result deleted.", "info")
+        return redirect(url_for("pga_list"))
+
 
     # ---------- NHL (Penguins only) ----------
 
@@ -331,6 +434,47 @@ def create_app():
 
 
 app = create_app()
+
+    @app.route("/nhl/<int:game_id>/edit", methods=["GET", "POST"])
+    @require_admin
+    def nhl_edit(game_id):
+        game = NhlGame.query.get_or_404(game_id)
+
+        if request.method == "POST":
+            game.game_date = datetime.strptime(request.form["game_date"], "%Y-%m-%d").date()
+            game.season = request.form["season"]
+            game.opponent = request.form["opponent"]
+            game.home_away = request.form["home_away"]
+
+            penguins_goals = int(request.form["penguins_goals"])
+            opponent_goals = int(request.form["opponent_goals"])
+            game.penguins_goals = penguins_goals
+            game.opponent_goals = opponent_goals
+
+            if penguins_goals > opponent_goals:
+                game.result = "W"
+            elif penguins_goals < opponent_goals:
+                game.result = "L"
+            else:
+                game.result = "T"
+
+            game.notes = request.form.get("notes") or None
+
+            db.session.commit()
+            flash("Penguins game updated.", "success")
+            return redirect(url_for("nhl_list"))
+
+        return render_template("nhl_edit.html", game=game)
+
+    @app.route("/nhl/<int:game_id>/delete", methods=["POST"])
+    @require_admin
+    def nhl_delete(game_id):
+        game = NhlGame.query.get_or_404(game_id)
+        db.session.delete(game)
+        db.session.commit()
+        flash("Penguins game deleted.", "info")
+        return redirect(url_for("nhl_list"))
+
 
 if __name__ == "__main__":
     with app.app_context():

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit NASCAR Race</h2>
+<form method="post" class="row g-3">
+  <div class="col-md-3">
+    <label class="form-label">Race Date</label>
+    <input type="date" name="race_date" class="form-control"
+           value="{{ race.race_date.strftime('%Y-%m-%d') }}" required>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Track</label>
+    <input type="text" name="track" class="form-control" value="{{ race.track }}" required>
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Series</label>
+    <input type="text" name="series" class="form-control" value="{{ race.series or '' }}">
+  </div>
+  <div class="col-md-5">
+    <label class="form-label">Race Name</label>
+    <input type="text" name="race_name" class="form-control" value="{{ race.race_name or '' }}">
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Winner</label>
+    <input type="text" name="winner" class="form-control" value="{{ race.winner }}" required>
+  </div>
+
+  <div class="col-md-2">
+    <label class="form-label">Start Pos</label>
+    <input type="number" name="start_position" class="form-control"
+           value="{{ race.start_position or '' }}">
+  </div>
+  <div class="col-md-2">
+    <label class="form-label">Finish Pos</label>
+    <input type="number" name="finish_position" class="form-control"
+           value="{{ race.finish_position or '' }}">
+  </div>
+  <div class="col-md-2">
+    <label class="form-label">Laps Led</label>
+    <input type="number" name="laps_led" class="form-control"
+           value="{{ race.laps_led or '' }}">
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Notes</label>
+    <textarea name="notes" class="form-control" rows="3">{{ race.notes or '' }}</textarea>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="{{ url_for('nascar_list') }}" class="btn btn-secondary ms-2">Cancel</a>
+  </div>
+</form>
+{% endblock %}
