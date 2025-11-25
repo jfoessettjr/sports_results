@@ -4,7 +4,8 @@
 <form method="post" class="row g-3">
   <div class="col-md-2">
     <label class="form-label">Year</label>
-    <input type="number" name="year" class="form-control" value="{{ result.year }}" required>
+    <input type="number" name="year" class="form-control"
+           value="{{ result.year }}" required>
   </div>
   <div class="col-md-5">
     <label class="form-label">Tournament Name</label>
@@ -13,7 +14,8 @@
   </div>
   <div class="col-md-5">
     <label class="form-label">Course</label>
-    <input type="text" name="course" class="form-control" value="{{ result.course or '' }}">
+    <input type="text" name="course" class="form-control"
+           value="{{ result.course or '' }}">
   </div>
 
   <div class="col-md-3">
@@ -25,6 +27,17 @@
     <label class="form-label">Score to Par</label>
     <input type="number" name="score_to_par" class="form-control"
            value="{{ result.score_to_par or '' }}">
+  </div>
+
+  <div class="col-md-3">
+    <label class="form-label">Winner</label>
+    <input type="text" name="winner" class="form-control"
+           value="{{ result.winner or '' }}">
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Winner Image URL</label>
+    <input type="text" name="winner_image_url" class="form-control"
+           value="{{ result.winner_image_url or '' }}">
   </div>
 
   <div class="col-12">

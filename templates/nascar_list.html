@@ -1,10 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h2>NASCAR Races</h2>
   {% if session.get('is_admin') %}
     <a class="btn btn-primary" href="{{ url_for('nascar_add') }}">Add Race</a>
   {% endif %}
+</div>
+
+<!-- Featured NASCAR images -->
+<div class="row mb-4">
+  <div class="col-md-6 mb-3">
+    <div class="card shadow-sm">
+      <img src="{{ url_for('static', filename='images/nascar_daytona.jpg') }}"
+           class="card-img-top"
+           alt="NASCAR at Daytona">
+      <div class="card-body">
+        <h5 class="card-title">Daytona</h5>
+        <p class="card-text mb-0">
+          Iconic superspeedway and home of the Daytona 500.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mb-3">
+    <div class="card shadow-sm">
+      <img src="{{ url_for('static', filename='images/nascar_short_track.jpg') }}"
+           class="card-img-top"
+           alt="NASCAR short track racing">
+      <div class="card-body">
+        <h5 class="card-title">Short Track Racing</h5>
+        <p class="card-text mb-0">
+          Close quarters racing and beating and banging under the lights.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <form method="get" class="row g-3 mb-3">
@@ -37,42 +68,8 @@
       <th>Race</th>
       <th>Track</th>
       <th>Winner</th>
+      <th>Car</th>
       <th>Start</th>
       <th>Finish</th>
       <th>Laps Led</th>
-      {% if session.get('is_admin') %}
-      <th>Actions</th>
-      {% endif %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for r in races %}
-    <tr>
-      <td>{{ r.race_date }}</td>
-      <td>{{ r.series or '' }}</td>
-      <td>{{ r.race_name or '' }}</td>
-      <td>{{ r.track }}</td>
-      <td>{{ r.winner }}</td>
-      <td>{{ r.start_position or '' }}</td>
-      <td>{{ r.finish_position or '' }}</td>
-      <td>{{ r.laps_led or '' }}</td>
-      {% if session.get('is_admin') %}
-      <td>
-        <a href="{{ url_for('nascar_edit', race_id=r.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-        <form method="post"
-              action="{{ url_for('nascar_delete', race_id=r.id) }}"
-              style="display:inline;"
-              onsubmit="return confirm('Delete this race?');">
-          <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-        </form>
-      </td>
-      {% endif %}
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-{% if not races %}
-<p>No races recorded yet.</p>
-{% endif %}
-{% endblock %}
+      {%

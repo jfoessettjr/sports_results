@@ -9,19 +9,34 @@
   </div>
   <div class="col-md-4">
     <label class="form-label">Track</label>
-    <input type="text" name="track" class="form-control" value="{{ race.track }}" required>
+    <input type="text" name="track" class="form-control"
+           value="{{ race.track }}" required>
   </div>
   <div class="col-md-3">
     <label class="form-label">Series</label>
-    <input type="text" name="series" class="form-control" value="{{ race.series or '' }}">
+    <input type="text" name="series" class="form-control"
+           value="{{ race.series or '' }}">
   </div>
   <div class="col-md-5">
     <label class="form-label">Race Name</label>
-    <input type="text" name="race_name" class="form-control" value="{{ race.race_name or '' }}">
+    <input type="text" name="race_name" class="form-control"
+           value="{{ race.race_name or '' }}">
   </div>
   <div class="col-md-4">
     <label class="form-label">Winner</label>
-    <input type="text" name="winner" class="form-control" value="{{ race.winner }}" required>
+    <input type="text" name="winner" class="form-control"
+           value="{{ race.winner }}" required>
+  </div>
+
+  <div class="col-md-2">
+    <label class="form-label">Car Number</label>
+    <input type="text" name="car_number" class="form-control"
+           value="{{ race.car_number or '' }}">
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Car Image URL</label>
+    <input type="text" name="car_image_url" class="form-control"
+           value="{{ race.car_image_url or '' }}">
   </div>
 
   <div class="col-md-2">

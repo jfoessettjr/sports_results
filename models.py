@@ -17,6 +17,8 @@ class NascarRace(db.Model):
     finish_position = db.Column(db.Integer, nullable=True)
     laps_led = db.Column(db.Integer, nullable=True)
     notes = db.Column(db.Text, nullable=True)
+    car_number = db.Column(db.String(10))
+    car_image_url = db.Column(db.String(255)) 
 
 
 class NflGame(db.Model):
@@ -44,7 +46,8 @@ class PgaResult(db.Model):
     finish_position = db.Column(db.Integer, nullable=True)
     score_to_par = db.Column(db.Integer, nullable=True)  # e.g., -10, +2
     notes = db.Column(db.Text, nullable=True)
-
+    winner = db.Column(db.String(100))
+    winner_image_url = db.Column(db.String(255))
 
 class NhlGame(db.Model):
     __tablename__ = "nhl_games"

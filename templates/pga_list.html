@@ -1,10 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h2>PGA Results</h2>
   {% if session.get('is_admin') %}
     <a class="btn btn-primary" href="{{ url_for('pga_add') }}">Add Result</a>
   {% endif %}
+</div>
+
+<!-- Featured PGA images -->
+<div class="row mb-4">
+  <div class="col-md-6 mb-3">
+    <div class="card shadow-sm">
+      <img src="{{ url_for('static', filename='images/pga_augusta.jpg') }}"
+           class="card-img-top"
+           alt="Augusta National Golf Club">
+      <div class="card-body">
+        <h5 class="card-title">Augusta National</h5>
+        <p class="card-text mb-0">
+          Home of The Masters with lightning-fast greens and tight fairways.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mb-3">
+    <div class="card shadow-sm">
+      <img src="{{ url_for('static', filename='images/pga_links.jpg') }}"
+           class="card-img-top"
+           alt="Links style golf course">
+      <div class="card-body">
+        <h5 class="card-title">Links Golf</h5>
+        <p class="card-text mb-0">
+          Wind, fescue and deep bunkers on classic links layouts.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <form method="get" class="row g-3 mb-3">
@@ -34,6 +65,7 @@
       <th>Tournament</th>
       <th>Course</th>
       <th>Finish</th>
+      <th>Winner</th>
       <th>Score to Par</th>
       {% if session.get('is_admin') %}
       <th>Actions</th>
@@ -48,13 +80,22 @@
       <td>{{ r.course or '' }}</td>
       <td>{{ r.finish_position or '' }}</td>
       <td>
+        {% if r.winner_image_url %}
+          <img src="{{ r.winner_image_url }}"
+               alt="{{ r.winner or 'Winner' }}"
+               style="height:40px; margin-right:6px; border-radius:50%;">
+        {% endif %}
+        {{ r.winner or '' }}
+      </td>
+      <td>
         {% if r.score_to_par is not none %}
           {% if r.score_to_par > 0 %}+{% endif %}{{ r.score_to_par }}
         {% endif %}
       </td>
       {% if session.get('is_admin') %}
       <td>
-        <a href="{{ url_for('pga_edit', result_id=r.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a href="{{ url_for('pga_edit', result_id=r.id) }}"
+           class="btn btn-sm btn-outline-primary">Edit</a>
         <form method="post"
               action="{{ url_for('pga_delete', result_id=r.id) }}"
               style="display:inline;"
@@ -70,5 +111,4 @@
 
 {% if not results %}
 <p>No PGA results recorded yet.</p>
-{% endif %}
 {% endblock %}
