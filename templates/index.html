@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-4">Sports Results Tracker</h1>
+<p>Track NASCAR races, Steelers games, Penguins games, and PGA results.</p>
+<ul>
+  <li><a href="{{ url_for('nascar_list') }}">View NASCAR results</a></li>
+  <li><a href="{{ url_for('nfl_list') }}">View Steelers games</a></li>
+  <li><a href="{{ url_for('nhl_list') }}">View Penguins games</a></li>
+  <li><a href="{{ url_for('pga_list') }}">View PGA results</a></li>
+</ul>
+{% endblock %}

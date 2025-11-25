@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add PGA Result</h2>
+<form method="post" class="row g-3">
+  <div class="col-md-2">
+    <label class="form-label">Year</label>
+    <input type="number" name="year" class="form-control" required>
+  </div>
+  <div class="col-md-5">
+    <label class="form-label">Tournament Name</label>
+    <input type="text" name="tournament_name" class="form-control" required>
+  </div>
+  <div class="col-md-5">
+    <label class="form-label">Course</label>
+    <input type="text" name="course" class="form-control">
+  </div>
+
+  <div class="col-md-3">
+    <label class="form-label">Finish Position</label>
+    <input type="number" name="finish_position" class="form-control">
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Score to Par (e.g. -10)</label>
+    <input type="number" name="score_to_par" class="form-control">
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Notes</label>
+    <textarea name="notes" class="form-control" rows="3"></textarea>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{{ url_for('pga_list') }}" class="btn btn-secondary ms-2">Cancel</a>
+  </div>
+</form>
+{% endblock %}

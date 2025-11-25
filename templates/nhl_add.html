@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Penguins Game</h2>
+<form method="post" class="row g-3">
+  <div class="col-md-3">
+    <label class="form-label">Game Date</label>
+    <input type="date" name="game_date" class="form-control" required>
+  </div>
+  <div class="col-md-3">
+    <label class="form-label">Season (e.g. 2025-26)</label>
+    <input type="text" name="season" class="form-control" required>
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Opponent</label>
+    <input type="text" name="opponent" class="form-control" required>
+  </div>
+
+  <div class="col-md-2">
+    <label class="form-label">Home/Away</label>
+    <select name="home_away" class="form-select" required>
+      <option value="H">Home</option>
+      <option value="A">Away</option>
+    </select>
+  </div>
+
+  <div class="col-md-2">
+    <label class="form-label">Penguins Goals</label>
+    <input type="number" name="penguins_goals" class="form-control" required>
+  </div>
+  <div class="col-md-2">
+    <label class="form-label">Opponent Goals</label>
+    <input type="number" name="opponent_goals" class="form-control" required>
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Notes</label>
+    <textarea name="notes" class="form-control" rows="3"></textarea>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{{ url_for('nhl_list') }}" class="btn btn-secondary ms-2">Cancel</a>
+  </div>
+</form>
+{% endblock %}
